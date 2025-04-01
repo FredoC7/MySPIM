@@ -3,9 +3,78 @@
 
 /* ALU */
 /* 10 Points */
+//Function will check the result, if is not zero return 0; otherwise return 1
+int result(unsigned ALUresult){
+    if(ALUresult != 0){
+        return 0;
+    }else{
+        return 1;
+    }
+}
+
+//Function will convert the ALUControl from binary to integer, to use it on the if conditions
+int binary_to_integer(const char *binary_string) {
+    return (int)strtol(binary_string, NULL, 2);
+}
+
 void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 {
+//Since ALUControl is a char, it will call the function to have it as an integer.
+int control = binary_to_integer(ALUControl);
 
+//On each condition pointer ALUresult has been dereference and its value modified 
+
+    if(control == 0){
+        *ALUresult = A + B;
+        *Zero = (char)result(ALUresult);
+    }
+    if(control == 1){
+        *ALUresult = A - B;
+        *Zero = (char)result(ALUresult);
+    }
+    if(control == 2){
+        if(A < B){
+            *ALUresult = 1;
+            *Zero =(char)result(ALUresult);
+        }else{
+            *ALUresult = 0;
+            *Zero =(char)result(ALUresult);
+        }
+    }
+    if(control == 3){
+        if((unsigned)A < (unsigned) B){
+            *ALUresult = 1;
+            *Zero =(char)result(ALUresult);
+        }else{
+            *ALUresult = 0;
+            *Zero =(char)result(ALUresult);
+        }
+    }
+    if(control == 4){
+       if(A && B){
+        *ALUresult = 1;
+        *Zero =(char)result(ALUresult);
+       }else{
+        *ALUresult = 0;
+        *Zero =(char)result(ALUresult);
+       }
+    }
+    if(control == 5){
+        if(A || B){
+            *ALUresult = 1;
+            *Zero =(char)result(ALUresult);
+        }else{
+            *ALUresult = 0;
+            *Zero =(char)result(ALUresult);
+        }
+    } 
+  //------------WORK IN PROGRESS-------
+    if(control == 6){
+        *ALUresult = B << 16;
+    }
+    if(control == 7){
+        *ALUresult = ~A;
+    }
 }
 
 /* instruction fetch */
